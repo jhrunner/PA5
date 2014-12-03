@@ -1,0 +1,12 @@
+Digraph input{
+
+"testFile.txt" -> "testFile2.txt"
+"testFile.txt" -> "facebook.com"
+"testFile2.txt" -> "testFile4.txt"
+"testFile2.txt" -> "facebook.com"
+"testFile3.txt" -> "testFile2.txt"
+"testFile3.txt" -> "testFile4.txt"
+"testFile4.txt" -> "facebook.com"
+"testFile4.txt" -> "testFile.txt"
+
+}
