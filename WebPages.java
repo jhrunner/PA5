@@ -7,16 +7,19 @@ import java.util.Collections;
 
 public class WebPages {
 	//Holds list of Term objects associated with each parsed word in web page
-	private HashTable termIndex;
+	private ArrayList<Term> termIndex;
 	private ArrayList<String> docList;
+	private ArrayList<String> hyper;
 	//Number of webpage files
 	private static int docCount;
 
 	//Constructor
-	public WebPages(int size){
+	public WebPages(){
 		docCount = 0;
-		termIndex = new HashTable(size);
+		termIndex = new ArrayList<Term>();
 		docList = new ArrayList<String>();
+		hyper = new ArrayList<String>();
+		
 	}
 
 	//Passes filename to HTMLParser to get parsed array WITH duplicates
@@ -25,6 +28,7 @@ public class WebPages {
 
 		//add to termIndex the parsed words from *document*
 		HTMLParser pageParser = new HTMLParser(document);
+		hyper = pageParser.getHyper();
 		docList.add(document);
 		docCount++;
 
@@ -57,7 +61,7 @@ public class WebPages {
 	}
 
 	private void addNewTerm(String name, String document){
-		termIndex.add(document, name);
+		termIndex.add(new Term(document, name));
 	}
 
 	//Iterates through the array of termIndex and prints each word
@@ -67,7 +71,9 @@ public class WebPages {
 			System.out.println(word.getName());
 		}
 	}
-
+	public int getNumVertices(){
+		return hyper.size();
+	}
 	//Prints which pages *word* exist on
 	public String[] whichPages(String word) {
 		word = word.toLowerCase();
@@ -85,7 +91,7 @@ public class WebPages {
 		//System.out.println("The Word is: " + word);
 		for (Term term : termIndex){
 			if (term.getName().equals(word)){
-				termIndex.delete(word);
+				termIndex.remove(term);
 			}
 		}
 	}
@@ -158,7 +164,7 @@ public class WebPages {
 		return docCount;
 	}
 
-	public HashTable getTermIndex() {
+	public ArrayList<Term> getTermIndex() {
 		return termIndex;
 	}
 }

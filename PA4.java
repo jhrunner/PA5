@@ -17,7 +17,7 @@ public class PA4 {
             //Commands from input file
             ArrayList<String> commands = parseInputFile(args[0]);
           //Object to hold word information for given web pages.
-            WebPages webPage = new WebPages(size);
+            WebPages webPage = new WebPages();
             ArrayList<String> nonEmptyCommands = new ArrayList<String>();
             for(String command: commands){
                 if(command.trim().compareTo("") != 0)

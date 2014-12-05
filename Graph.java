@@ -15,17 +15,16 @@ public class Graph {
 	
 	private Vector<TreeMap<Integer, Integer>> adjList;
 
-	public Graph(int n)
+	public Graph()
 	{
-		numVertices = n;
+		numVertices = 0;
 		numEdges = 0;
 		adjList = new Vector<TreeMap<Integer, Integer>>();
-		for(int i = 0; i < numVertices; i++)
-		{
-			adjList.add(new TreeMap<Integer, Integer>());
-		}
+		
 	}
-	
+	public void addVertex(String hyperLink){
+		
+	}
 	public int getNumVertices() 
 	{
 		return numVertices;
@@ -46,7 +45,7 @@ public class Graph {
 		// Add the edge to both v's and w's adjacency list
 		adjList.get(v).put(w, wgt);
 		//adjList.get(w).put(v, wgt);
-		//numEdges++;
+		numEdges++;
 		
 	}
 	

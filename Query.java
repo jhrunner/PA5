@@ -1,15 +1,16 @@
 package PA5;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Query{
     private double termFrequency, documentFrequency, totalDocs;
     //              TF              DF                  D
 
-    private HashTable table;
+    private ArrayList<Term> table;
     // number of docs read in
     private int totalDocuments;
 
-    public Query(HashTable table){
+    public Query(ArrayList table){
         this.table = table;
         totalDocuments = WebPages.getDocCount();
     }
