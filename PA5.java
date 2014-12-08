@@ -41,7 +41,7 @@ public class PA5 {
                     }
                     else if (!reachedEOF) {
                     	//System.out.println("added page: " + command);
-                        webPage.addPage(command);
+                        webPage.addPage(command.toLowerCase());
                     }
                     else if (reachedEOF && !foundStops) { 	
                     	webPage.pruneStopWords(command);

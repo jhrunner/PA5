@@ -144,8 +144,10 @@ public class HTMLParser {
 				if(str.length()>16){
 					if (str.substring(1, 15).equals("ahref=\"http://")){
 						str = str.substring(15,str.length()-2);
-						if(!str.equals("") && !hyper.contains(str)) 
+						//str = str.toLowerCase();
+						if(!str.equals("") && !hyper.contains(str)){ 
 							hyper.add(str);
+						}
 					}
 				}
 				array.remove(i);
@@ -155,7 +157,12 @@ public class HTMLParser {
 		return array;
 	}
 	public ArrayList<String> getHyper(){
-		return hyper;
+		ArrayList<String> temp = new ArrayList<String>();
+		for (String s : hyper){
+			temp.add(s.toLowerCase());
+			//System.out.println(s);
+		}
+		return temp;
 	}
 
 	// Splits a string into an ArrayList of words
@@ -254,25 +261,25 @@ public class HTMLParser {
 		return sorted;
 	}
 
-	public static void main(String[] args)
-	{
-		HTMLParser a = new HTMLParser("random");
-		String fullString = a.fileToString(new File("random"));
-		// Turns the string into an array of words, split non accepted
-		// characters
-		ArrayList<String> parsedArray = a.splitToArray(fullString);
-		parsedArray = a.removeEmptyEntries(parsedArray);
-		parsedArray = a.removeHTMLCommands(parsedArray);
-		for(String str: parsedArray)
-		{
-			//str.trim();
-			//str = str.replaceAll("\\s+","");
-			System.out.println(str);
-			System.out.println(a.hyper);
-
-		}
-		System.out.println(a.hyper.size());
-	}
+//	public static void main(String[] args)
+//	{
+//		HTMLParser a = new HTMLParser("random");
+//		String fullString = a.fileToString(new File("random"));
+//		// Turns the string into an array of words, split non accepted
+//		// characters
+//		ArrayList<String> parsedArray = a.splitToArray(fullString);
+//		parsedArray = a.removeEmptyEntries(parsedArray);
+//		parsedArray = a.removeHTMLCommands(parsedArray);
+//		for(String str: parsedArray)
+//		{
+//			//str.trim();
+//			//str = str.replaceAll("\\s+","");
+//			System.out.println(str);
+//			System.out.println(a.hyper);
+//
+//		}
+//		System.out.println(a.hyper.size());
+//	}
 
 	// Converts a String[] to an ArrayList
 	private ArrayList<String> convertToArrayList(String[] array) {
