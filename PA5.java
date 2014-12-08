@@ -5,9 +5,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PA4 {
+public class PA5 {
     public static final int DEBUG = 0;
     public static int size=0;
+    public static String outName;
     public static void main(String[] args) {
         if (args.length < 1 || args.length >1){
             System.out.println("Error: incorrect arguments");
@@ -48,9 +49,9 @@ public class PA4 {
                     }
                     //System.out.println("command: " + command);
                     if (command.equals("*STOPs*")){
-                    	webPage.printTerms();
+                    	//webPage.printTerms();
                     	foundStops = true;
-                    	System.out.println();
+                    	//System.out.println();
                     }
                     else if (foundStops){
                     	//System.out.println("[" + command.toLowerCase() + " ]");
@@ -58,6 +59,7 @@ public class PA4 {
                     	webPage.bestPages(command);
                     }
                 }
+                webPage.graphMethod(outName);
             }
         }
     }
@@ -68,6 +70,7 @@ public class PA4 {
         File input = new File(filename);
         try {
             Scanner scanner = new Scanner(input);
+            outName=scanner.nextLine();
             size = scanner.nextInt();
             while (scanner.hasNextLine()) {
                 commands.add(scanner.nextLine());

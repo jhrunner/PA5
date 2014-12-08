@@ -141,11 +141,12 @@ public class HTMLParser {
 			if (array.get(i).contains("<") || array.get(i).contains(">")) {
 				String str = array.get(i);
 				str = str.trim().replaceAll("\\s+", "");
-
-				if (str.substring(1, 15).equals("ahref=\"http://")){
-					str = str.substring(15,str.length()-2);
-					if(!str.equals("") && !hyper.contains(str)) 
-						hyper.add(str);
+				if(str.length()>16){
+					if (str.substring(1, 15).equals("ahref=\"http://")){
+						str = str.substring(15,str.length()-2);
+						if(!str.equals("") && !hyper.contains(str)) 
+							hyper.add(str);
+					}
 				}
 				array.remove(i);
 				i--;
@@ -273,13 +274,13 @@ public class HTMLParser {
 		System.out.println(a.hyper.size());
 	}
 
-		// Converts a String[] to an ArrayList
-		private ArrayList<String> convertToArrayList(String[] array) {
-			ArrayList<String> convert = new ArrayList<String>();
-			for (String i : array)
-				convert.add(i);
-			return convert;
-		}
-
-
+	// Converts a String[] to an ArrayList
+	private ArrayList<String> convertToArrayList(String[] array) {
+		ArrayList<String> convert = new ArrayList<String>();
+		for (String i : array)
+			convert.add(i);
+		return convert;
 	}
+
+
+}

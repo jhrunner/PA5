@@ -12,23 +12,26 @@ public class WebPages {
 	private ArrayList<String> hyper;
 	//Number of webpage files
 	private static int docCount;
-
+	private Graph graph;
 	//Constructor
 	public WebPages(){
 		docCount = 0;
 		termIndex = new ArrayList<Term>();
 		docList = new ArrayList<String>();
 		hyper = new ArrayList<String>();
-		
+		graph = new Graph();
 	}
 
 	//Passes filename to HTMLParser to get parsed array WITH duplicates
 	//Calls adds terms to termIndex
 	public void addPage(String document){
-
+		graph.addVertex(new Vertex(document));
 		//add to termIndex the parsed words from *document*
 		HTMLParser pageParser = new HTMLParser(document);
 		hyper = pageParser.getHyper();
+		for (String s : hyper){
+			graph.addLink(document, s);
+		}
 		docList.add(document);
 		docCount++;
 
@@ -62,6 +65,9 @@ public class WebPages {
 
 	private void addNewTerm(String name, String document){
 		termIndex.add(new Term(document, name));
+	}
+	public void graphMethod(String s){
+		graph.writeFile(s);
 	}
 
 	//Iterates through the array of termIndex and prints each word
@@ -146,7 +152,12 @@ public class WebPages {
 		//System.out.println("specifics at max: " + fmt.format(docSpecific[index]));
 		//System.out.println("queryWeight at max: " + queryWeights);
 		//printQuery(query);
+		max *= graph.inDegree(docList.get(index));
+		if (max == 0){
+			System.out.println(" not found");
+		}else{
 		System.out.println(" in " + docList.get(index) + ": " + fmt.format(max) );
+		}
 	} 
 	public void printQuery(String query){
 		ArrayList<String> str = new ArrayList<String>();

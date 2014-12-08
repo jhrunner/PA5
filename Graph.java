@@ -1,106 +1,91 @@
 package PA5;
 
-import java.util.TreeMap;
-import java.util.Vector;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.*;
 
-// code is from CS200 recitation 14 thx 
 public class Graph {
 
-	private int numVertices;
-	
+	public ArrayList<Vertex> vert;
 
-	private int numEdges;
-	
-	private boolean directed;
-	
-	private Vector<TreeMap<Integer, Integer>> adjList;
+	public Graph(){
+		vert = new ArrayList<Vertex>();
 
-	public Graph()
-	{
-		numVertices = 0;
-		numEdges = 0;
-		adjList = new Vector<TreeMap<Integer, Integer>>();
-		
-	}
-	public void addVertex(String hyperLink){
-		
-	}
-	public int getNumVertices() 
-	{
-		return numVertices;
-	}
-	
-	public int getNumEdges()
-	{
-		return numEdges;
-	}
-	
-	public int getEdgeWeight(Integer v, Integer w)
-	{
-		return adjList.get(v).get(w);
-	}
-	
-	public void addEdge(Integer v, Integer w, int wgt) 
-	{
-		// Add the edge to both v's and w's adjacency list
-		adjList.get(v).put(w, wgt);
-		//adjList.get(w).put(v, wgt);
-		numEdges++;
-		
-	}
-	
-	public void addEdge(Edge e)
-	{
-		//Extract the vertices and weight from the edge e
-		Integer v = e.getV();
-		Integer w = e.getW();
-		int weight = e.getWeight();
-		addEdge(v, w, weight);
 	}
 
-	public void removeEdge(Edge e)
-	{
-		// Extract the vertices from the edge e
-		Integer v = e.getV();
-		Integer w = e.getW();
-		
-		// Remove the edge from v's and w's adjacency list
-		adjList.get(v).remove(w);
-		adjList.get(w).remove(v);
-		numEdges--;
+	public void addVertex(Vertex v){
+		for (Vertex find: vert){
+			if (find.getname().equals(v.getname()))
+				return;
+		}
+			vert.add(v);
+		Collections.sort(vert);
 	}
 	
-	public Edge FindEdge(Integer v, Integer w)
+	public void addLink(String one, String two)
 	{
-		int weight = adjList.get(v).get(w);
-		return new Edge(v, w, weight);
+		Vertex v = new Vertex(two);
+		addVertex(v);
+		if(getVertex(one)!=null){
+			getVertex(one).addLink(two);
+			//System.out.println("got here");
+		}
 	}
-	
+	public Vertex getVertex(String docName){
 
-	TreeMap<Integer, Integer> getAdjList(Integer v)
-	{
-		return adjList.get(v);
-	}
-	
-	public String toString()
-	{
-		String out="";
-		
-		for(int i=0; i<numVertices; i++)
+		for(Vertex v: vert)
 		{
-			out+=i;
-			for(int j=0; j<numVertices; j++)
-			{
-				if(getAdjList(i).containsKey(j)&&FindEdge(i,j).getV()==i)
-				//if(getAdjList(i).containsKey(j))
-				{
-					out+=" => "+j+"["+getEdgeWeight(i,j)+"]";
+			if(v.getname().equals(docName))
+				return v;
+		}
+		return null;
+
+	}
+	public int inDegree(String find){
+		int count =0;
+		for(Vertex v: vert ){
+			if (!v.getname().equals(find))
+				for(String s: v.hyper){
+					//System.out.println(s);
+					if(s.equals(find))
+						count++;
+				}
+		}
+		return count;
+	}
+	public void writeFile(String output){
+		try{
+			PrintWriter fileOut = new PrintWriter ( new File (output));
+			fileOut.println("digraph program5 {");
+			for(Vertex v: vert ){
+				for(String s: v.hyper){
+					fileOut.println("\""+v.getname()+"\" -> \""+s+"\";");
 				}
 			}
-			out+="\n";
+			fileOut.println("}");
+			fileOut.close();
+		}catch(Exception e){
+			System.err.println(e);
 		}
-		
-		return out;
 	}
-	 
+	public static void main(String [] args){
+		Graph graph = new Graph();
+		graph.addVertex(new Vertex("sup"));
+		graph.addVertex(new Vertex("apple"));
+		graph.addVertex(new Vertex("teacher"));
+		graph.addVertex(new Vertex("sup"));
+		graph.addLink("apple","teacher");
+		graph.addLink("sup","teacher");
+		graph.addLink("apple","banana");
+		//System.out.println(graph.vert);
+		for (Vertex vert: graph.vert){
+			System.out.println(vert.getname());
+		}
+		System.out.println(graph.inDegree("teacher"));
+		System.out.println(graph.inDegree("sup"));
+		System.out.println(graph.inDegree("apple"));
+		System.out.println(graph.inDegree("banana"));
+		graph.writeFile("testOutput");
+		
+	}
 }
