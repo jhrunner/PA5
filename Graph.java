@@ -68,24 +68,24 @@ public class Graph {
 			System.err.println(e);
 		}
 	}
-	public static void main(String [] args){
-		Graph graph = new Graph();
-		graph.addVertex(new Vertex("sup"));
-		graph.addVertex(new Vertex("apple"));
-		graph.addVertex(new Vertex("teacher"));
-		graph.addVertex(new Vertex("sup"));
-		graph.addLink("apple","teacher");
-		graph.addLink("sup","teacher");
-		graph.addLink("apple","banana");
-		//System.out.println(graph.vert);
-		for (Vertex vert: graph.vert){
-			System.out.println(vert.getname());
-		}
-		System.out.println(graph.inDegree("teacher"));
-		System.out.println(graph.inDegree("sup"));
-		System.out.println(graph.inDegree("apple"));
-		System.out.println(graph.inDegree("banana"));
-		graph.writeFile("testOutput");
-		
-	}
+//	public static void main(String [] args){
+//		Graph graph = new Graph();
+//		graph.addVertex(new Vertex("sup"));
+//		graph.addVertex(new Vertex("apple"));
+//		graph.addVertex(new Vertex("teacher"));
+//		graph.addVertex(new Vertex("sup"));
+//		graph.addLink("apple","teacher");
+//		graph.addLink("sup","teacher");
+//		graph.addLink("apple","banana");
+//		//System.out.println(graph.vert);
+//		for (Vertex vert: graph.vert){
+//			System.out.println(vert.getname());
+//		}
+//		System.out.println(graph.inDegree("teacher"));
+//		System.out.println(graph.inDegree("sup"));
+//		System.out.println(graph.inDegree("apple"));
+//		System.out.println(graph.inDegree("banana"));
+//		graph.writeFile("testOutput");
+//		
+//	}
 }
